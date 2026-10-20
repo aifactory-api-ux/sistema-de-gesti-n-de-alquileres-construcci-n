@@ -10,7 +10,7 @@
 - Failed items: 15
 - Requirements: 0/48 met
 - Fidelity: 0.0%
-- Abort reason: Retry budget exceeded for 14
+- Abort reason: none
 
 ## Outstanding findings
 
@@ -40,6 +40,8 @@
 - Fidelity requirement not verifiable (no repair item created): Registrar clientes
 - Fidelity requirement not verifiable (no repair item created): Listado de clientes con búsqueda
 - Fidelity requirement not verifiable (no repair item created): Registrar equipos en catálogo
+- Fidelity requirement not verifiable (no repair item created): Estados de equipo: disponible, alquilado, mantenimiento, baja
+- Fidelity requirement not verifiable (no repair item created): Estados de alquiler: activo, finalizado, vencido
 - Fidelity requirement not verifiable (no repair item created): Dashboard con resumen
 - Fidelity requirement not verifiable (no repair item created): Notificaciones pendientes
 - Fidelity requirement not verifiable (no repair item created): Marcar notificaciones como leídas
@@ -60,8 +62,6 @@
 - Fidelity requirement not verifiable (no repair item created): Estado de equipos en UI
 - Fidelity requirement not verifiable (no repair item created): Conexión frontend-backend
 - Fidelity requirement not verifiable (no repair item created): Uso desde oficina y depósito
-- Fidelity requirement not verifiable (no repair item created): Estados de equipo: disponible, alquilado, mantenimiento, baja
-- Fidelity requirement not verifiable (no repair item created): Estados de alquiler: activo, finalizado, vencido
 - Ítem no completado: Foundation — shared types, models, database, config (1/2)
 - Ítem no completado: Foundation — shared types, models, database, config (2/2)
 - Ítem no completado: Backend — API Routers (clientes, equipos, alquileres)
