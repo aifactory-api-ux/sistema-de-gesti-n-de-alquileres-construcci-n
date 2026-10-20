@@ -1,0 +1,1144 @@
+```yaml
+openapi: 3.1.0
+info:
+  title: Sistema de Gestión de Alquileres de Construcción
+  version: 1.0.0
+  description: API for construction rental management system
+
+paths:
+  /clientes:
+    get:
+      operationId: list_clientes
+      parameters:
+        - name: buscar
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 1
+            minimum: 1
+        - name: page_size
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 20
+            minimum: 1
+            maximum: 100
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResponseCliente'
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+    post:
+      operationId: create_cliente
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClienteCreate'
+      responses:
+        '201':
+          description: Cliente created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cliente'
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+
+  /clientes/{id}:
+    get:
+      operationId: get_cliente
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cliente'
+        '404':
+          description: Cliente not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+    put:
+      operationId: update_cliente
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClienteUpdate'
+      responses:
+        '200':
+          description: Cliente updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cliente'
+        '404':
+          description: Cliente not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+    delete:
+      operationId: delete_cliente
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Cliente deleted
+        '404':
+          description: Cliente not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+
+  /equipos:
+    get:
+      operationId: list_equipos
+      parameters:
+        - name: estado
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/EstadoEquipo'
+        - name: buscar
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 1
+            minimum: 1
+        - name: page_size
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 20
+            minimum: 1
+            maximum: 100
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResponseEquipo'
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+    post:
+      operationId: create_equipo
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EquipoCreate'
+      responses:
+        '201':
+          description: Equipo created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Equipo'
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+
+  /equipos/disponibles:
+    get:
+      operationId: list_equipos_disponibles
+      parameters:
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 1
+            minimum: 1
+        - name: page_size
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 20
+            minimum: 1
+            maximum: 100
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResponseEquipo'
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+
+  /equipos/{id}:
+    get:
+      operationId: get_equipo
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Equipo'
+        '404':
+          description: Equipo not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+    put:
+      operationId: update_equipo
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EquipoUpdate'
+      responses:
+        '200':
+          description: Equipo updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Equipo'
+        '404':
+          description: Equipo not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+    delete:
+      operationId: delete_equipo
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Equipo deleted
+        '404':
+          description: Equipo not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+
+  /alquileres:
+    get:
+      operationId: list_alquileres
+      parameters:
+        - name: cliente_id
+          in: query
+          required: false
+          schema:
+            type: integer
+        - name: estado
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/EstadoAlquiler'
+        - name: fecha_inicio_desde
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date
+        - name: fecha_inicio_hasta
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date
+        - name: buscar
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 1
+            minimum: 1
+        - name: page_size
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 20
+            minimum: 1
+            maximum: 100
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResponseAlquiler'
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+    post:
+      operationId: create_alquiler
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AlquilerCreate'
+      responses:
+        '201':
+          description: Alquiler created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Alquiler'
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+
+  /alquileres/{id}:
+    get:
+      operationId: get_alquiler
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AlquilerDetalle'
+        '404':
+          description: Alquiler not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+    put:
+      operationId: update_alquiler
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AlquilerUpdate'
+      responses:
+        '200':
+          description: Alquiler updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Alquiler'
+        '404':
+          description: Alquiler not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+    delete:
+      operationId: delete_alquiler
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Alquiler deleted
+        '404':
+          description: Alquiler not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+
+  /alquileres/{id}/devolver:
+    post:
+      operationId: devolver_alquiler
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Alquiler devuelto
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Alquiler'
+        '404':
+          description: Alquiler not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+
+  /alquileres/{id}/entregar:
+    post:
+      operationId: entregar_alquiler
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Alquiler entregado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Alquiler'
+        '404':
+          description: Alquiler not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+
+  /notificaciones:
+    get:
+      operationId: list_notificaciones
+      parameters:
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 1
+            minimum: 1
+        - name: page_size
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 20
+            minimum: 1
+            maximum: 100
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResponseNotificacion'
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+
+  /notificaciones/pendientes:
+    get:
+      operationId: list_notificaciones_pendientes
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Notificacion'
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+
+  /notificaciones/vencimientos:
+    get:
+      operationId: list_notificaciones_vencimientos
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Notificacion'
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+
+  /notificaciones/marcar-todas-leidas:
+    put:
+      operationId: marcar_todas_leidas
+      responses:
+        '200':
+          description: Notificaciones marked as read
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Notificaciones marked as read"
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+
+  /dashboard/resumen:
+    get:
+      operationId: get_dashboard_resumen
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DashboardResumen'
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+
+  /health:
+    get:
+      operationId: health_check
+      responses:
+        '200':
+          description: Service is healthy
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "healthy"
+
+components:
+  schemas:
+    EstadoEquipo:
+      type: string
+      enum:
+        - disponible
+        - alquilado
+        - mantenimiento
+        - baja
+
+    EstadoAlquiler:
+      type: string
+      enum:
+        - activo
+        - finalizado
+        - vencido
+
+    TipoNotificacion:
+      type: string
+      enum:
+        - vencimiento_proximo
+        - vencido
+        - recordatorio
+
+    ClienteBase:
+      type: object
+      properties:
+        nombre_empresa:
+          type: string
+          minLength: 1
+          maxLength: 200
+        razon_social:
+          type: string
+          maxLength: 200
+          nullable: true
+        rut_cuit:
+          type: string
+          maxLength: 20
+          nullable: true
+        persona_contacto:
+          type: string
+          maxLength: 200
+          nullable: true
+        telefono:
+          type: string
+          maxLength: 50
+          nullable: true
+        email:
+          type: string
+          maxLength: 200
+          nullable: true
+        direccion:
+          type: string
+          maxLength: 500
+          nullable: true
+        observaciones:
+          type: string
+          maxLength: 1000
+          nullable: true
+      required:
+        - nombre_empresa
+
+    ClienteCreate:
+      allOf:
+        - $ref: '#/components/schemas/ClienteBase'
+
+    ClienteUpdate:
+      type: object
+      properties:
+        nombre_empresa:
+          type: string
+          minLength: 1
+          maxLength: 200
+        razon_social:
+          type: string
+          maxLength: 200
+          nullable: true
+        rut_cuit:
+          type: string
+          maxLength: 20
+          nullable: true
+        persona_contacto:
+          type: string
+          maxLength: 200
+          nullable: true
+        telefono:
+          type: string
+          maxLength: 50
+          nullable: true
+        email:
+          type: string
+          maxLength: 200
+          nullable: true
+        direccion:
+          type: string
+          maxLength: 500
+          nullable: true
+        observaciones:
+          type: string
+          maxLength: 1000
+          nullable: true
+
+    Cliente:
+      allOf:
+        - $ref: '#/components/schemas/ClienteBase'
+        - type: object
+          properties:
+            id:
+              type: integer
+            fecha_creacion:
+              type: string
+              format: date-time
+            fecha_actualizacion:
+              type: string
+              format: date-time
+
+    EquipoBase:
+      type: object
+      properties:
+        nombre:
+          type: string
+          minLength: 1
+          maxLength: 200
+        codigo:
+          type: string
+          minLength: 1
+          maxLength: 50
+        descripcion:
+          type: string
+          maxLength: 1000
+          nullable: true
+        estado:
+          $ref: '#/components/schemas/EstadoEquipo'
+        precio_diario:
+          type: number
+          format: float
+          minimum: 0
+        observaciones:
+          type: string
+          maxLength: 1000
+          nullable: true
+      required:
+        - nombre
+        - codigo
+        - precio_diario
+
+    EquipoCreate:
+      allOf:
+        - $ref: '#/components/schemas/EquipoBase'
+
+    EquipoUpdate:
+      type: object
+      properties:
+        nombre:
+          type: string
+          minLength: 1
+          maxLength: 200
+        codigo:
+          type: string
+          minLength: 1
+          maxLength: 50
+        descripcion:
+          type: string
+          maxLength: 1000
+          nullable: true
+        estado:
+          $ref: '#/components/schemas/EstadoEquipo'
+        precio_diario:
+          type: number
+          format: float
+          minimum: 0
+        observaciones:
+          type: string
+          maxLength: 1000
+          nullable: true
+
+    Equipo:
+      allOf:
+        - $ref: '#/components/schemas/EquipoBase'
+        - type: object
+          properties:
+            id:
+              type: integer
+            fecha_creacion:
+              type: string
+              format: date-time
+            fecha_actualizacion:
+              type: string
+              format: date-time
+
+    AlquilerBase:
+      type: object
+      properties:
+        cliente_id:
+          type: integer
+        fecha_inicio:
+          type: string
+          format: date
+        fecha_devolucion_prevista:
+          type: string
+          format: date
+        estado:
+          $ref: '#/components/schemas/EstadoAlquiler'
+        observaciones:
+          type: string
+          maxLength: 1000
+          nullable: true
+      required:
+        - cliente_id
+        - fecha_inicio
+        - fecha_devolucion_prevista
+
+    AlquilerCreate:
+      type: object
+      properties:
+        cliente_id:
+          type: integer
+        fecha_inicio:
+          type: string
+          format: date
+        fecha_devolucion_prevista:
+          type: string
+          format: date
+        observaciones:
+          type: string
+          maxLength: 1000
+          nullable: true
+        equipos_ids:
+          type: array
+          items:
+            type: integer
+          minItems: 1
+      required:
+        - cliente_id
+        - fecha_inicio
+        - fecha_devolucion_prevista
+        - equipos_ids
+
+    AlquilerUpdate:
+      type: object
+      properties:
+        fecha_inicio:
+          type: string
+          format: date
+          nullable: true
+        fecha_devolucion_prevista:
+          type: string
+          format: date
+          nullable: true
+        fecha_devolucion_real:
+          type: string
+          format: date
+          nullable: true
+        estado:
+          $ref: '#/components/schemas/EstadoAlquiler'
+          nullable: true
+        observaciones:
+          type: string
+          maxLength: 1000
+          nullable: true
+
+    Alquiler:
+      allOf:
+        - $ref: '#/components/schemas/AlquilerBase'
+        - type: object
+          properties:
+            id:
+              type: integer
+            fecha_creacion:
+              type: string
+              format: date-time
+            fecha_actualizacion:
+              type: string
+              format: date-time
+            equipos:
+              type: array
+              items:
+                $ref: '#/components/schemas/Equipo'
+
+    AlquilerDetalle:
+      allOf:
+        - $ref: '#/components/schemas/Alquiler'
+        - type: object
+          properties:
+            cliente:
+              $ref: '#/components/schemas/Cliente'
+
+    NotificacionBase:
+      type: object
+      properties:
+        alquiler_id:
+          type: integer
+        tipo:
+          $ref: '#/components/schemas/TipoNotificacion'
+        mensaje:
+          type: string
+          maxLength: 500
+        leida:
+          type: boolean
+      required:
+        - alquiler_id
+        - tipo
+        - mensaje
+
+    NotificacionCreate:
+      allOf:
+        - $ref: '#/components/schemas/NotificacionBase'
+
+    Notificacion:
+      allOf:
+        - $ref: '#/components/schemas/NotificacionBase'
+        - type: object
+          properties:
+            id:
+              type: integer
+            fecha_creacion:
+              type: string
+              format: date-time
+            fecha_actualizacion:
+              type: string
+              format: date-time
+
+    AlquilerFilters:
+      type: object
+      properties:
+        cliente_id:
+          type: integer
+          nullable: true
+        estado:
+          $ref: '#/components/schemas/EstadoAlquiler'
+          nullable: true
+        fecha_inicio_desde:
+          type: string
+          format: date
+          nullable: true
+        fecha_inicio_hasta:
+          type: string
+          format: date
+          nullable: true
+        buscar:
+          type: string
+          nullable: true
+
+    ClienteFilters:
+      type: object
+      properties:
+        buscar:
+          type: string
+          nullable: true
+
+    EquipoFilters:
+      type: object
+      properties:
+        estado:
+          $ref: '#/components/schemas/EstadoEquipo'
+          nullable: true
+        buscar:
+          type: string
+          nullable: true
+
+    DashboardResumen:
+      type: object
+      properties:
+        total_clientes:
+          type: integer
+        total_equipos:
+          type: integer
+        equipos_disponibles:
+          type: integer
+        equipos_alquilados:
+          type: integer
+        alquileres_activos:
+          type: integer
+        alquileres_vencidos:
+          type: integer
+        notificaciones_pendientes:
+          type: integer
+        ingresos_mes:
+          type: number
+          format: float
+
+    PaginatedResponseCliente:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Cliente'
+        total:
+          type: integer
+        page:
+          type: integer
+        page_size:
+          type: integer
+
+    PaginatedResponseEquipo:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Equipo'
+        total:
+          type: integer
+        page:
+          type: integer
+        page_size:
+          type: integer
+
+    PaginatedResponseAlquiler:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Alquiler'
+        total:
+          type: integer
+        page:
+          type: integer
+        page_size:
+          type: integer
+
+    PaginatedResponseNotificacion:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Notificacion'
+        total:
+          type: integer
+        page:
+          type: integer
+        page_size:
+          type: integer
+
+    Error:
+      type: object
+      properties:
+        detail:
+          type: string
+
+    ValidationError:
+      type: object
+      properties:
+        detail:
+          type: array
+          items:
+            type: object
+            properties:
+              loc:
+                type: array
+                items:
+                  oneOf:
+                    - type: string
+                    - type: integer
+              msg:
+                type: string
+              type:
+                type: string
+```
